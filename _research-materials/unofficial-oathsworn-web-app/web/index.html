@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oathsworn: Into the Deepwood</title>
+    <link rel="icon" type="image/png" href="data/ui/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/chapters.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/save-data.css">
+    <link rel="stylesheet" href="css/might.css">
+</head>
+<body>
+
+<!-- ============================================================
+     HOME SCREEN
+     ============================================================ -->
+<div id="screen-home" class="screen active">
+    <div class="home-wrap d-flex flex-column align-items-center justify-content-center h-100">
+        <div class="text-center mb-5">
+            <img src="data/ui/oathsworn_logo.png" alt="Oathsworn: Into the Deepwood" class="home-logo">
+        </div>
+        <div class="d-flex flex-column gap-3 home-button-col">
+            <button id="btn-new-campaign" class="btn btn-primary-game" data-string-key="ui.new_campaign">New Campaign</button>
+            <button id="btn-continue-campaign" class="btn btn-primary-game d-none" data-string-key="ui.continue_campaign">Continue Campaign</button>
+            <button id="btn-might-home" class="btn btn-ghost-game" data-string-key="ui.might_decks">Might Decks</button>
+            <button id="btn-view-save" class="btn btn-ghost-game" data-string-key="ui.view_saved_data">View Saved Data</button>
+            <button id="btn-settings" class="btn btn-ghost-game" data-string-key="ui.settings">Settings</button>
+        </div>
+        <p class="home-credit">
+            Web Companion + Transpiler "thing" created by <a href="https://github.com/TheTacoScott/oathsworn-webapp" target="_blank" rel="noopener" class="home-credit-link">Scott Powers</a>
+            <br>
+            Based on the incredible work of <a href="https://www.shadowborne-games.com/" target="_blank" rel="noopener" class="home-credit-link">Shadowborne Games</a>
+            <br>
+            <span id="app-version" class="home-version"></span>
+        </p>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     SAVE DATA SCREEN
+     ============================================================ -->
+<div id="screen-save-data" class="screen">
+    <div class="container py-3">
+        <div class="d-flex align-items-center mb-4 gap-3">
+            <button id="btn-save-back" class="btn btn-ghost-game" data-string-key="ui.back">Back</button>
+            <h4 class="mb-0 screen-heading" data-string-key="ui.saved_data">Saved Data</h4>
+            <button id="btn-copy-save" class="btn btn-ghost-game ms-auto" data-string-key="ui.copy_json">Copy JSON</button>
+        </div>
+        <div id="save-data-content">
+            <!-- populated by loadSaveDataScreen() -->
+        </div>
+        <details class="mt-4">
+            <summary class="save-data-summary" data-string-key="ui.raw_json">Raw JSON</summary>
+            <pre id="save-data-raw" class="save-data-raw"></pre>
+        </details>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     CHAPTER SELECT SCREEN
+     ============================================================ -->
+<div id="screen-chapters" class="screen">
+    <div class="chapters-layout">
+        <div class="chapters-list-pane">
+            <div class="chapters-list-header">
+                <button id="btn-chapters-back" class="btn btn-ghost-game btn-back-home" data-string-key="ui.back">Back</button>
+                <h4 class="mb-0 screen-heading" data-string-key="ui.select_chapter">Select Chapter</h4>
+                <button id="btn-settings-chapters" class="btn btn-ghost-game ms-auto" title="Settings"><img src="data/ui/settings.png" class="settings-icon" alt="Settings"></button>
+            </div>
+            <div class="chapter-list-wrapper">
+                <div id="chapter-list" class="chapters-list-scroll">
+                    <!-- populated by loadChapterSelectScreen() -->
+                </div>
+                <div id="chapter-list-fade-top"    class="choice-fade choice-fade-top">&#9650; <span data-string-key="ui.scroll_more">scroll for more</span></div>
+                <div id="chapter-list-fade-bottom" class="choice-fade choice-fade-bottom"><span data-string-key="ui.scroll_more">scroll for more</span> &#9660;</div>
+            </div>
+        </div>
+        <div class="chapters-detail-pane">
+            <div id="chapter-detail">
+                <!-- populated by selectChapterDetail() -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     GAME SCREEN
+     ============================================================ -->
+<div id="screen-game" class="screen game-screen">
+    <div class="game-panel d-flex flex-column">
+
+        <!-- Game header bar: Back | {Path A/B | Time | Clue tokens} | nav buttons -->
+        <div class="game-header px-3 flex-shrink-0">
+            <!-- Left: Back button -->
+            <div class="game-header-left">
+                <button id="btn-game-back" class="btn btn-ghost-game">Back</button>
+            </div>
+            <!-- Center cluster: [A · ! 1 2 3] | TIME | [4 5 6 X · B] -->
+            <div class="hud-cluster">
+                <div class="hud-cluster-left">
+                    <button class="clue-token clue-token-exclaim" data-clue-index="6"><span class="ct-bang">!</span></button>
+                    <button class="clue-token" data-clue-index="0"><span class="ct-num">1</span></button>
+                    <button class="clue-token" data-clue-index="1"><span class="ct-num">2</span></button>
+                    <button class="clue-token" data-clue-index="2"><span class="ct-num">3</span></button>
+                    <button class="path-btn path-btn-a" id="btn-path-a"><span class="path-letter">A</span></button>
+                </div>
+                <div class="time-tracker-display">
+                    <img src="data/ui/deepwood_token.png" class="time-token-img" alt="Time">
+                    <span id="game-time" class="time-token-num">0</span>
+                </div>
+                <div class="hud-cluster-right">
+                    <button class="path-btn path-btn-b" id="btn-path-b"><span class="path-letter">B</span></button>
+                    <button class="clue-token" data-clue-index="3"><span class="ct-num">4</span></button>
+                    <button class="clue-token" data-clue-index="4"><span class="ct-num">5</span></button>
+                    <button class="clue-token" data-clue-index="5"><span class="ct-num">6</span></button>
+                    <button class="clue-token clue-token-x" data-clue-index="7"><span class="ct-x">X</span></button>
+                </div>
+            </div>
+            <!-- Right: nav buttons -->
+            <div class="game-header-right">
+                <div class="d-flex align-items-center gap-2">
+                    <button id="btn-settings-game" class="btn btn-ghost-game" title="Settings"><img src="data/ui/settings.png" class="settings-icon" alt="Settings"></button>
+                    <button id="btn-bug-report" class="btn btn-ghost-game" title="Bug Report" aria-label="Bug Report"><svg class="bug-report-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="4.5" r="2.5"/><ellipse cx="8" cy="11" rx="3.5" ry="4"/><path d="M5.5 3.2 Q4 1.5 2.5 1M10.5 3.2 Q12 1.5 13.5 1" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M4.5 8.5 L1 7M4.5 11 L1 11M4.5 13.5 L1 15" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M11.5 8.5 L15 7M11.5 11 L15 11M11.5 13.5 L15 15" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></button>
+                    <button id="btn-might-open" class="btn btn-ghost-game" data-string-key="ui.might_decks">Might Decks</button>
+                    <button id="btn-game-menu" class="btn btn-ghost-game" data-string-key="ui.exit_chapter_select">Exit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter title (shown only for section 0) -->
+        <div id="chapter-title-area" class="chapter-title-area text-center flex-shrink-0 d-none">
+            <h2 id="chapter-title-text" class="chapter-title"></h2>
+            <p id="chapter-author-text" class="chapter-author mb-0"></p>
+        </div>
+
+        <!-- Scrollable plate content with flanking HUD drawers -->
+        <div class="content-area-wrapper">
+            <div id="game-content" class="game-content">
+                <!-- populated by renderPlate() -->
+            </div>
+            <div id="content-fade-top"    class="content-fade content-fade-top"></div>
+            <div id="content-fade-bottom" class="content-fade content-fade-bottom"></div>
+        </div>
+
+        <!-- Auto-scroll paused indicator -->
+        <div id="autoscroll-paused" class="autoscroll-paused-bar d-none" data-string-key="ui.autoscroll_paused">
+            Auto-scroll paused &middot; click to resume
+        </div>
+
+        <!-- Audio controls + choice/location buttons -->
+        <div class="game-bottom flex-shrink-0 px-3 pb-3">
+            <div id="audio-controls" class="audio-native-area invisible">
+                <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                    <button id="btn-audio-prev" class="btn btn-audio-nav px-1" title="Previous / Restart"><img src="data/ui/play_previous.png" class="audio-nav-icon" alt="Previous"></button>
+                    <span id="audio-track-label" class="audio-track-label"></span>
+                    <button id="btn-audio-next" class="btn btn-audio-nav px-1" title="Next track"><img src="data/ui/play_next.png" class="audio-nav-icon" alt="Next"></button>
+                </div>
+                <audio id="audio-native" controls class="w-100"></audio>
+            </div>
+            <div class="choice-area-wrapper">
+                <div id="choice-buttons" class="choice-buttons-area d-flex flex-column gap-2">
+                    <!-- populated by renderButtons() -->
+                </div>
+                <div id="choice-fade-top"    class="choice-fade choice-fade-top">&#9650; <span data-string-key="ui.scroll_more">scroll for more</span></div>
+                <div id="choice-fade-bottom" class="choice-fade choice-fade-bottom"><span data-string-key="ui.scroll_more">scroll for more</span> &#9660;</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ============================================================
+     SETTINGS MODAL
+     ============================================================ -->
+<div id="settings-modal" class="bug-modal-overlay" style="display:none">
+    <div class="settings-modal">
+        <div class="bug-modal-header">
+            <span class="bug-modal-title">Settings</span>
+            <button id="btn-settings-close" class="btn btn-ghost-game btn-sm">&#10005;</button>
+        </div>
+        <div class="settings-modal-body">
+            <div class="settings-row">
+                <label class="settings-label">
+                    <input type="checkbox" id="setting-auto-scroll" class="settings-checkbox">
+                    <span class="settings-label-text" data-string-key="ui.auto_scroll">Auto Scroll</span>
+                </label>
+                <p class="settings-desc" data-string-key="ui.auto_scroll_desc">Scroll the page automatically as narration plays. Scrolling manually will disable it for the current section.</p>
+            </div>
+            <div class="settings-row">
+                <label class="settings-label">
+                    <input type="checkbox" id="setting-auto-narration" class="settings-checkbox">
+                    <span class="settings-label-text" data-string-key="ui.auto_narration">Auto Start Narration</span>
+                </label>
+                <p class="settings-desc" data-string-key="ui.auto_narration_desc">Begin playing narration automatically when a new section loads.</p>
+            </div>
+            <div class="settings-row">
+                <label class="settings-label">
+                    <input type="checkbox" id="setting-auto-next" class="settings-checkbox">
+                    <span class="settings-label-text" data-string-key="ui.auto_next">Auto Play Next Track</span>
+                </label>
+                <p class="settings-desc" data-string-key="ui.auto_next_desc">Advance to the next audio track automatically when one finishes.</p>
+            </div>
+            <div class="settings-row">
+                <label class="settings-label">
+                    <span class="settings-label-text" data-string-key="ui.language">Language</span>
+                </label>
+                <select id="setting-language" class="settings-language-select">
+                    <!-- populated by populateLanguageSelect() -->
+                </select>
+                <p class="settings-desc" data-string-key="ui.language_desc">Switch the story text and interface language. Falls back to English for any missing keys.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     IMAGE LIGHTBOX
+     ============================================================ -->
+<div id="image-lightbox" class="image-lightbox-overlay" style="display:none">
+    <img id="image-lightbox-img" class="image-lightbox-img" src="" alt="">
+    <p class="image-lightbox-hint" data-string-key="ui.lightbox_close">Click anywhere to close</p>
+</div>
+
+
+<!-- ============================================================
+     MIGHT DECKS - overlay (global, populated by might.js)
+     ============================================================ -->
+<div id="might-overlay" class="might-overlay" style="display:none"></div>
+
+
+<!-- ============================================================
+     BUG REPORT MODAL
+     ============================================================ -->
+<div id="bug-report-modal" class="bug-modal-overlay" style="display:none">
+    <div class="bug-modal">
+        <div class="bug-modal-header">
+            <span class="bug-modal-title" data-string-key="ui.file_bug_report">File a Bug Report</span>
+            <button id="btn-bug-modal-close" class="btn btn-ghost-game btn-sm">&#10005;</button>
+        </div>
+        <div class="bug-modal-body">
+            <p class="bug-modal-instructions" data-string-key="ui.bug_instructions">Copy the debug info below and paste it into a new GitHub issue:</p>
+            <a href="https://github.com/TheTacoScott/oathsworn-webapp/issues" target="_blank" rel="noopener" class="bug-modal-link">&#8594; <span data-string-key="ui.open_github_issues">Open GitHub Issues</span></a>
+            <textarea id="bug-report-text" class="bug-report-textarea" readonly spellcheck="false"></textarea>
+        </div>
+        <div class="bug-modal-footer">
+            <button id="btn-bug-copy" class="btn btn-ghost-game" data-string-key="ui.copy_to_clipboard">Copy to Clipboard</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     SCRIPTS (order matters: data -> engine -> jQuery -> bootstrap -> main)
+     ============================================================ -->
+<script src="data/strings.js"></script>
+<script src="js/ui_strings.js"></script>
+<script src="js/lang-loader.js"></script>
+<script src="data/chapters/init.js"></script>
+<script src="data/chapters/chapter_1.js"></script>
+<script src="data/chapters/chapter_2.js"></script>
+<script src="data/chapters/chapter_3.js"></script>
+<script src="data/chapters/chapter_4.js"></script>
+<script src="data/chapters/chapter_5.js"></script>
+<script src="data/chapters/chapter_6.js"></script>
+<script src="data/chapters/chapter_7.js"></script>
+<script src="data/chapters/chapter_8.js"></script>
+<script src="data/chapters/chapter_9.js"></script>
+<script src="data/chapters/chapter_10.js"></script>
+<script src="data/chapters/chapter_11.js"></script>
+<script src="data/chapters/chapter_22.js"></script>
+<script src="data/chapters/chapter_12.js"></script>
+<script src="data/chapters/chapter_13.js"></script>
+<script src="data/chapters/chapter_14.js"></script>
+<script src="data/chapters/chapter_15.js"></script>
+<script src="data/chapters/chapter_16.js"></script>
+<script src="data/chapters/chapter_17.js"></script>
+<script src="data/chapters/chapter_18.js"></script>
+<script src="data/chapters/chapter_19.js"></script>
+<script src="data/chapters/chapter_20.js"></script>
+<script src="data/chapters/chapter_21.js"></script>
+<script src="data/images.js"></script>
+<script src="js/version.js"></script>
+<script src="js/game.js"></script>
+<script src="js/patch_util.js"></script>
+<script src="js/patches.js"></script>
+<script src="js/might.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
