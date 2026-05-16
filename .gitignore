@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Claude Code — local-only settings (personal overrides) and worktree checkouts
+.claude/settings.local.json
+.claude/worktrees/
