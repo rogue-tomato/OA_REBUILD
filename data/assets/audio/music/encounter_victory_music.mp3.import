@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bktqyohcj6te8"
-path="res://.godot/imported/encounter_victory_music.mp3-20a16acbba5fbe03df977b28988796d8.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/music/encounter_victory_music.mp3"
-dest_files=["res://.godot/imported/encounter_victory_music.mp3-20a16acbba5fbe03df977b28988796d8.mp3str"]
 
 [params]
 

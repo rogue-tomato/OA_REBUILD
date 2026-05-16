@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://mcrynahnisix"
-path="res://.godot/imported/chp12_18_3__a.mp3-15efb3fd09270a551bde70aa76fdfa18.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/narration/chp12_18_3__a.mp3"
-dest_files=["res://.godot/imported/chp12_18_3__a.mp3-15efb3fd09270a551bde70aa76fdfa18.mp3str"]
 
 [params]
 

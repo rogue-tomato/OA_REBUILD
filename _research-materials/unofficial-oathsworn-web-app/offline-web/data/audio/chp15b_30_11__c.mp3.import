@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ohcgfh8l7uok"
-path="res://.godot/imported/chp15b_30_11__c.mp3-5f2e5500416111cfe7f525f40184b9ff.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://_research-materials/unofficial-oathsworn-web-app/offline-web/data/audio/chp15b_30_11__c.mp3"
-dest_files=["res://.godot/imported/chp15b_30_11__c.mp3-5f2e5500416111cfe7f525f40184b9ff.mp3str"]
 
 [params]
 

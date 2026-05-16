@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cb4vpdm5kyjeh"
-path="res://.godot/imported/chp20_4_15__a.mp3-0c5028917e88b8685996b85f0a55657c.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/narration/chp20_4_15__a.mp3"
-dest_files=["res://.godot/imported/chp20_4_15__a.mp3-0c5028917e88b8685996b85f0a55657c.mp3str"]
 
 [params]
 

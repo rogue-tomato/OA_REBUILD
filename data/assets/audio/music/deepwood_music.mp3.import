@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://chtpx8n6ctx2"
-path="res://.godot/imported/deepwood_music.mp3-177b07096f0e2f57b8fc5ae73cda16ec.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/music/deepwood_music.mp3"
-dest_files=["res://.godot/imported/deepwood_music.mp3-177b07096f0e2f57b8fc5ae73cda16ec.mp3str"]
 
 [params]
 

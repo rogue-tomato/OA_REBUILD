@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjcmgwlohm065"
-path="res://.godot/imported/NarrativeScreenHint.png-8a90e6a2e9293e2500d1d656b022f4e7.ctex"
+path="res://.godot/imported/NarrativeScreenHint.png-d3d5aa14aa67495f5fdb6b3360ed2364.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_research-materials/official app UI/NarrativeScreenHint.png"
-dest_files=["res://.godot/imported/NarrativeScreenHint.png-8a90e6a2e9293e2500d1d656b022f4e7.ctex"]
+source_file="res://_research-materials/official-app-ui/NarrativeScreenHint.png"
+dest_files=["res://.godot/imported/NarrativeScreenHint.png-d3d5aa14aa67495f5fdb6b3360ed2364.ctex"]
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://vwman0htc6tr"
-path="res://.godot/imported/encounter_lost_music.mp3-26394c13db17d3132050dd2203415363.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/music/encounter_lost_music.mp3"
-dest_files=["res://.godot/imported/encounter_lost_music.mp3-26394c13db17d3132050dd2203415363.mp3str"]
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://colmummnu04fk"
-path="res://.godot/imported/chp19_8_6__c.mp3-e73f3ca23ddb9aec1b6b6e1fb42760c8.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/narration/chp19_8_6__c.mp3"
-dest_files=["res://.godot/imported/chp19_8_6__c.mp3-e73f3ca23ddb9aec1b6b6e1fb42760c8.mp3str"]
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://fpcelk58mpp"
-path="res://.godot/imported/chp12_epi_5__a.mp3-ca77762feedfc8c7aa1265cf0b217720.mp3str"
+valid=false
 
 [deps]
 
 source_file="res://data/assets/audio/narration/chp12_epi_5__a.mp3"
-dest_files=["res://.godot/imported/chp12_epi_5__a.mp3-ca77762feedfc8c7aa1265cf0b217720.mp3str"]
 
 [params]
 
